@@ -21,7 +21,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace = "com.example.locabel"
+    namespace = "com.rhr.locabell"
     compileSdk = 36  // CHANGED from 34 to 36
     
     compileOptions {
@@ -39,7 +39,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.locabel"
+        applicationId = "com.rhr.locabell"
         minSdk = 24
         targetSdk = flutter.targetSdkVersion
         versionCode = (localProperties.getProperty("flutter.versionCode") ?: "1").toInt()

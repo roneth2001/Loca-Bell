@@ -207,7 +207,7 @@ class _AlarmRingingScreenState extends State<AlarmRingingScreen>
             scale: _pulseAnimation,
             child: Container(
               width: 160,
-              height: 160,
+              height: 130,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: Colors.white.withOpacity(0.1),

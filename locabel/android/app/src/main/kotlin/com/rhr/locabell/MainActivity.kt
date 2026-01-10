@@ -1,4 +1,4 @@
-package com.example.locabel
+package com.rhr.locabell
 
 import io.flutter.embedding.android.FlutterActivity
 

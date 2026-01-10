@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'package:geolocator/geolocator.dart';
+import 'package:locabel/screens/ringing_alarm_screen.dart';
 import '../models/location_alarm.dart';
 import '../services/storage_service.dart';
 import '../services/alarm_service.dart';
+import 'package:flutter/material.dart';
 
 /// Location service for GPS tracking and alarm triggering
 /// 
@@ -11,7 +13,7 @@ import '../services/alarm_service.dart';
 class LocationService {
   static final LocationService instance = LocationService._internal();
   LocationService._internal();
-
+  GlobalKey<NavigatorState>? _navigatorKey;
   StreamSubscription<Position>? _positionSubscription;
   Position? _currentPosition;
   bool _isMonitoring = false;
@@ -203,10 +205,30 @@ class LocationService {
 
       // Trigger alarm sound and vibration
       await AlarmService.instance.triggerAlarm(alarm);
-
+      _navigateToRingingScreen(alarm);
+      
       print('Alarm triggered successfully: ${alarm.name}');
     } catch (e) {
       print('Error triggering alarm: $e');
+    }
+  }
+  void _navigateToRingingScreen(LocationAlarm alarm) {
+    if (_navigatorKey == null) {
+      print('⚠️ WARNING: Navigator key not set! Cannot show ringing screen.');
+      print('⚠️ Add this to main.dart: LocationService.instance.setNavigatorKey(navigatorKey);');
+      return;
+    }
+
+    try {
+      _navigatorKey!.currentState?.push(
+        MaterialPageRoute(
+          builder: (context) => AlarmRingingScreen(alarm: alarm),
+          fullscreenDialog: true,
+        ),
+      );
+      print('✅ Navigated to ringing screen');
+    } catch (e) {
+      print('❌ Error navigating to ringing screen: $e');
     }
   }
 
@@ -304,6 +326,11 @@ class LocationService {
   void dispose() {
     stopLocationMonitoring();
     print('LocationService disposed');
+  }
+
+  void setNavigatorKey(GlobalKey<NavigatorState> key) {
+  _navigatorKey = key;
+  print('✓ Navigator key set');
   }
 }
 

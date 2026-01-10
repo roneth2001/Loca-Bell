@@ -9,6 +9,7 @@ import 'package:locabel/services/alarm_service.dart';
 import 'package:locabel/services/location_service.dart';
 import 'package:locabel/services/storage_service.dart';
 
+final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeService();
@@ -17,6 +18,7 @@ void main() async {
   await LocationService.instance.init();
   await AlarmService.instance.init();
   
+  LocationService.instance.setNavigatorKey(navigatorKey);
   runApp(const MyApp());
 }
 
@@ -122,6 +124,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
         useMaterial3: true,
       ),
+      navigatorKey: navigatorKey,
       home: const HomeScreen(),
     );
   }

@@ -5,10 +5,18 @@ import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:locabel/screens/home.dart';
+import 'package:locabel/services/alarm_service.dart';
+import 'package:locabel/services/location_service.dart';
+import 'package:locabel/services/storage_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeService();
+
+  await StorageService.instance.init();
+  await LocationService.instance.init();
+  await AlarmService.instance.init();
+  
   runApp(const MyApp());
 }
 
